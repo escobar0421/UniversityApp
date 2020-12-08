@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="UniversityApp.Views.InstructorPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="ic_action_add_circle_outline" Command="{Binding CreateInstructorCommand}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout BindingContext="{Binding Instructor}" Padding="20">
+
+            <SearchBar Placeholder="Search Instructor"
+                       HeightRequest="30"
+                       Text="{Binding Filter}"
+            ></SearchBar>
+
+            <ListView ItemsSource="{Binding Instructors}"
+                HasUnevenRows="True"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding IsRefreshing}"
+                      RefreshCommand="{Binding RefresCommand}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding EditInstructorCommand}"></TapGestureRecognizer>
+                                </Grid.GestureRecognizers>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding LastName}"></Label>
+                                <Label Grid.Column="1" Text="{Binding FirstMidName}"></Label>
+                                <Label Grid.Column="2" Text="{Binding HireDate}"></Label>
+                                <ImageButton Grid.Column="3" Source="ic_action_delete_outline" Command="{Binding DeleteInstructorCommand}" BackgroundColor="Transparent"></ImageButton>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
